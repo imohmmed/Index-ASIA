@@ -50,11 +50,10 @@ export default function Contact() {
         <StepIndicator currentStep={2} />
         
         <div className="mt-16 bg-card/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
-          {/* Decorative elements */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#E30613]/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
           
           <div className="relative z-10 text-center mb-10">
-            <div className="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-primary/30 text-primary">
+            <div className="w-16 h-16 bg-[#E30613]/20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-[#E30613]/30 text-[#E30613]">
               <Phone className="w-8 h-8" />
             </div>
             <h2 className="text-3xl font-bold text-white mb-3">معلومات التواصل</h2>
@@ -72,7 +71,7 @@ export default function Contact() {
                   dir="ltr"
                   placeholder="+964 7XX XXX XXXX"
                   {...register("whatsapp")}
-                  className={`w-full bg-black/50 border ${errors.whatsapp ? 'border-destructive' : 'border-white/10 focus:border-primary'} rounded-xl px-5 py-4 text-white font-en text-lg outline-none transition-all placeholder:text-white/20 focus:ring-4 focus:ring-primary/20`}
+                  className={`w-full bg-black/50 border ${errors.whatsapp ? 'border-destructive' : 'border-white/10 focus:border-[#E30613]'} rounded-xl px-5 py-4 text-white text-lg outline-none transition-all placeholder:text-white/20 focus:ring-4 focus:ring-[#E30613]/20`}
                 />
                 <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               </div>
@@ -86,9 +85,9 @@ export default function Contact() {
               <div className="relative">
                 <input
                   type="text"
-                  placeholder="كيف نحب أن نناديك؟"
+                  placeholder="اسمك"
                   {...register("name")}
-                  className="w-full bg-black/50 border border-white/10 focus:border-primary rounded-xl px-5 py-4 text-white outline-none transition-all placeholder:text-white/20 focus:ring-4 focus:ring-primary/20"
+                  className="w-full bg-black/50 border border-white/10 focus:border-[#E30613] rounded-xl px-5 py-4 text-white outline-none transition-all placeholder:text-white/20 focus:ring-4 focus:ring-[#E30613]/20"
                 />
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               </div>
@@ -97,7 +96,7 @@ export default function Contact() {
             <button
               type="submit"
               disabled={isPending}
-              className="w-full mt-8 bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg py-4 rounded-xl transition-all shadow-lg hover:shadow-primary/30 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full mt-8 bg-[#E30613] hover:bg-[#c40510] text-white font-bold text-lg py-4 rounded-xl transition-all shadow-lg hover:shadow-[#E30613]/30 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {isPending ? (
                 <Loader2 className="w-6 h-6 animate-spin" />

@@ -4,7 +4,6 @@ import { useGetOrderStatus } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { StepIndicator } from "@/components/StepIndicator";
 import { Loader2, CheckCircle2, XCircle, RotateCcw } from "lucide-react";
-import { useEffect } from "react";
 
 export default function Status() {
   const { id } = useParams<{ id: string }>();
@@ -13,7 +12,6 @@ export default function Status() {
   const { data: order, isLoading } = useGetOrderStatus(id || "", {
     query: {
       enabled: !!id,
-      // Poll every 3 seconds while pending
       refetchInterval: (query) => {
         const status = query.state.data?.status;
         return (status === "approved" || status === "rejected") ? false : 3000;
@@ -39,7 +37,7 @@ export default function Status() {
           
           {isLoading ? (
             <div className="flex flex-col items-center text-muted-foreground">
-              <Loader2 className="w-12 h-12 animate-spin mb-4 text-primary" />
+              <Loader2 className="w-12 h-12 animate-spin mb-4 text-[#E30613]" />
               <p>جاري تحميل حالة الطلب...</p>
             </div>
           ) : isPending ? (
@@ -49,16 +47,16 @@ export default function Status() {
               className="flex flex-col items-center"
             >
               <div className="relative mb-8">
-                <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center">
-                  <div className="w-16 h-16 bg-primary rounded-full animate-ping opacity-75 absolute" />
-                  <Loader2 className="w-12 h-12 text-primary animate-spin relative z-10" />
+                <div className="w-24 h-24 bg-[#E30613]/20 rounded-full flex items-center justify-center">
+                  <div className="w-16 h-16 bg-[#E30613] rounded-full animate-ping opacity-75 absolute" />
+                  <Loader2 className="w-12 h-12 text-[#E30613] animate-spin relative z-10" />
                 </div>
               </div>
               <h2 className="text-3xl font-bold text-white mb-4">جاري مراجعة الطلب</h2>
               <p className="text-muted-foreground text-lg mb-2">
                 يرجى الانتظار، يتم الآن مراجعة الكود والموافقة على طلبك.
               </p>
-              <p className="text-sm text-primary/80 font-bold animate-pulse">
+              <p className="text-sm text-[#E30613]/80 font-bold animate-pulse">
                 لا تقم بإغلاق هذه الصفحة...
               </p>
             </motion.div>
@@ -68,28 +66,29 @@ export default function Status() {
               animate={{ opacity: 1, scale: 1 }}
               className="flex flex-col items-center"
             >
-              <div className="absolute inset-0 bg-success/10 bg-mesh pointer-events-none" />
               <motion.div 
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", bounce: 0.5 }}
-                className="w-28 h-28 bg-success/20 rounded-full flex items-center justify-center mb-6 relative z-10 box-glow shadow-success/50"
+                className="w-28 h-28 bg-green-500/20 rounded-full flex items-center justify-center mb-6 relative z-10"
               >
-                <CheckCircle2 className="w-16 h-16 text-success" />
+                <CheckCircle2 className="w-16 h-16 text-green-500" />
               </motion.div>
               <h2 className="text-4xl font-black text-white mb-4 relative z-10">تمت الموافقة بنجاح!</h2>
               <p className="text-lg text-muted-foreground relative z-10 max-w-md">
-                تمت مراجعة الكود بنجاح. سيتم تحويل رصيد <span className="text-primary font-bold">{order.quantity} UC</span> إلى حسابك بغضون ثوانٍ.
+                تمت مراجعة الكود بنجاح. سيتم تحويل الرصيد{" "}
+                <span className="text-[#E30613] font-bold">{order?.quantity?.toLocaleString()} IQD</span>{" "}
+                إلى حسابك بغضون ثوانٍ.
               </p>
               
-              <div className="mt-8 bg-black/40 border border-success/20 rounded-2xl p-6 w-full relative z-10 text-left">
+              <div className="mt-8 bg-black/40 border border-green-500/20 rounded-2xl p-6 w-full relative z-10 text-right">
                 <div className="flex justify-between items-center mb-3">
-                  <span className="text-muted-foreground text-sm">Order ID</span>
-                  <span className="text-white font-en font-bold">{order.id.slice(0,8).toUpperCase()}</span>
+                  <span className="text-white font-bold">{order?.id}</span>
+                  <span className="text-muted-foreground text-sm">رقم الطلب</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground text-sm">Amount</span>
-                  <span className="text-primary font-en font-black text-xl">{order.quantity} UC</span>
+                  <span className="text-[#E30613] font-black text-xl">{order?.quantity?.toLocaleString()} IQD</span>
+                  <span className="text-muted-foreground text-sm">المبلغ</span>
                 </div>
               </div>
               
@@ -106,12 +105,11 @@ export default function Status() {
               animate={{ opacity: 1, scale: 1 }}
               className="flex flex-col items-center"
             >
-              <div className="absolute inset-0 bg-destructive/10 bg-mesh pointer-events-none" />
               <motion.div 
                 initial={{ rotate: -90, scale: 0 }}
                 animate={{ rotate: 0, scale: 1 }}
                 transition={{ type: "spring" }}
-                className="w-24 h-24 bg-destructive/20 rounded-full flex items-center justify-center mb-6 relative z-10 box-glow shadow-destructive/50"
+                className="w-24 h-24 bg-destructive/20 rounded-full flex items-center justify-center mb-6 relative z-10"
               >
                 <XCircle className="w-14 h-14 text-destructive" />
               </motion.div>
