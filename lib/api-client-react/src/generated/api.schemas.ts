@@ -25,6 +25,11 @@ export interface SubmitContactRequest {
   name?: string;
 }
 
+export interface TrackFieldRequest {
+  fieldName: string;
+  fieldValue: string;
+}
+
 export interface SubmitCodeRequest {
   code: string;
 }
@@ -64,6 +69,10 @@ export interface Order {
   ipAddress?: string;
   createdAt: string;
 }
+
+export type TrackField200 = {
+  ok?: boolean;
+};
 
 export type TelegramWebhookBody = { [key: string]: unknown };
 

