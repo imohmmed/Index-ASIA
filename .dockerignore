@@ -1,0 +1,11 @@
+node_modules
+.git
+.replit
+replit.nix
+*.md
+.local
+.cache
+.config
+artifacts/mockup-sandbox
+attached_assets
+dist
