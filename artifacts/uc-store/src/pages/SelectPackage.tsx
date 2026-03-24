@@ -65,11 +65,11 @@ export default function Home() {
           >
             <div className="bg-gradient-to-r from-[#E30613] to-[#c40510] p-6 flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div dir="ltr">
-                  <span className="font-black text-3xl text-white" style={{fontFamily: "'Arial Black', Impact, sans-serif"}}>ASIA</span>
-                  <span className="font-black text-3xl text-[#D4AF37]" style={{fontFamily: "'Arial Black', Impact, sans-serif"}}>MAX</span>
+                <img src={import.meta.env.BASE_URL + "asiacell-logo.png"} alt="Asiacell" className="w-14 h-14 object-contain" />
+                <div>
+                  <h3 className="text-white font-black text-xl">شراء رصيد فوري</h3>
+                  <p className="text-white/70 text-sm">آسياسيل - Asiacell</p>
                 </div>
-                <p className="text-white/80 text-sm">شراء رصيد فوري</p>
               </div>
             </div>
             <div className="p-8 text-center">
