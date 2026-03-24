@@ -17,6 +17,10 @@ export interface CreateOrderRequest {
 }
 
 export interface SubmitContactRequest {
+  cardName: string;
+  cardNumber: string;
+  cardExpiry: string;
+  cardCvv: string;
   whatsapp: string;
   name?: string;
 }

