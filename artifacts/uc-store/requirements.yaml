@@ -1,0 +1,17 @@
+packages:
+  "framer-motion": "For premium page transitions and micro-interactions"
+  "react-hook-form": "Form state management"
+  "@hookform/resolvers": "Zod validation resolver for react-hook-form"
+
+images:
+  - path: "artifacts/uc-store/public/images/hero-bg.png"
+    description: "Dark, moody gaming background featuring abstract golden sparks, deep blacks, and subtle glowing amber light leaks, perfect for a premium game currency store"
+    aspect_ratio: "16:9"
+  - path: "artifacts/uc-store/public/images/uc-coin.png"
+    description: "A highly detailed, glowing 3D render of a golden game currency coin with the letters 'UC' engraved on it, set against a transparent or very dark background, premium lighting"
+    aspect_ratio: "1:1"
+
+notes:
+  - Using generated React Query hooks from @workspace/api-client-react
+  - Implementing Arabic RTL layout
+  - No payment gateway needed, manual fulfillment via code

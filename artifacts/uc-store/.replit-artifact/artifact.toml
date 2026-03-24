@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "UC Store"
+version = "1.0.0"
+id = "artifacts/uc-store"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19639
+
+[services.development]
+run = "pnpm --filter @workspace/uc-store run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/uc-store", "run", "build" ]
+publicDir = "artifacts/uc-store/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19639"
+BASE_PATH = "/"
