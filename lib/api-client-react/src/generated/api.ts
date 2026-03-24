@@ -19,6 +19,7 @@ import type {
 import type {
   CreateOrderRequest,
   DecideOrderRequest,
+  ExchangeRate,
   HealthStatus,
   Order,
   SubmitCodeRequest,
@@ -634,6 +635,81 @@ export const useDecideOrder = <
 > => {
   return useMutation(getDecideOrderMutationOptions(options));
 };
+
+/**
+ * @summary Get current exchange rate
+ */
+export const getGetExchangeRateUrl = () => {
+  return `/api/settings/rate`;
+};
+
+export const getExchangeRate = async (
+  options?: RequestInit,
+): Promise<ExchangeRate> => {
+  return customFetch<ExchangeRate>(getGetExchangeRateUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetExchangeRateQueryKey = () => {
+  return [`/api/settings/rate`] as const;
+};
+
+export const getGetExchangeRateQueryOptions = <
+  TData = Awaited<ReturnType<typeof getExchangeRate>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getExchangeRate>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetExchangeRateQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getExchangeRate>>> = ({
+    signal,
+  }) => getExchangeRate({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getExchangeRate>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetExchangeRateQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getExchangeRate>>
+>;
+export type GetExchangeRateQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get current exchange rate
+ */
+
+export function useGetExchangeRate<
+  TData = Awaited<ReturnType<typeof getExchangeRate>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getExchangeRate>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetExchangeRateQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
 
 /**
  * @summary Telegram bot webhook for callback queries

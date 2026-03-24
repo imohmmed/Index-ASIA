@@ -167,6 +167,21 @@ export const DecideOrderResponse = zod.object({
 });
 
 /**
+ * @summary Get current exchange rate
+ */
+export const GetExchangeRateResponse = zod.object({
+  rate: zod.number(),
+  packages: zod.array(
+    zod.object({
+      id: zod.string(),
+      name: zod.string(),
+      faceValue: zod.number(),
+      price: zod.number(),
+    }),
+  ),
+});
+
+/**
  * @summary Telegram bot webhook for callback queries
  */
 export const TelegramWebhookBody = zod.object({}).passthrough();

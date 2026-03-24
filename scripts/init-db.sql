@@ -15,3 +15,12 @@ CREATE TABLE IF NOT EXISTS orders (
   ip_address TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+CREATE TABLE IF NOT EXISTS settings (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL,
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO settings (key, value) VALUES ('exchange_rate', '1.1')
+ON CONFLICT (key) DO NOTHING;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { ASIACELL_PACKAGES, AsiacellPackage } from "@/hooks/use-store-data";
+import { usePackages, AsiacellPackage } from "@/hooks/use-store-data";
 import { useCreateOrder } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { StepIndicator } from "@/components/StepIndicator";
@@ -9,6 +9,7 @@ import { Loader2, X, ShoppingCart } from "lucide-react";
 
 export default function Home() {
   const [_, setLocation] = useLocation();
+  const { packages } = usePackages();
   const [selectedPkg, setSelectedPkg] = useState<AsiacellPackage | null>(null);
   const [showModal, setShowModal] = useState(false);
 
@@ -81,7 +82,7 @@ export default function Home() {
               </p>
               <div className="bg-[#E30613]/10 border border-[#E30613]/20 rounded-xl py-3 px-6 inline-block">
                 <span className="text-[#E30613] font-bold">
-                  ابتداءً من 4,500 IQD
+                  ابتداءً من {packages[0]?.price.toLocaleString()} IQD
                 </span>
               </div>
             </div>
@@ -129,7 +130,7 @@ export default function Home() {
                 </div>
 
                 <div className="p-5 grid grid-cols-2 gap-3">
-                  {ASIACELL_PACKAGES.map((pkg) => (
+                  {packages.map((pkg) => (
                     <motion.button
                       key={pkg.id}
                       whileTap={{ scale: 0.95 }}

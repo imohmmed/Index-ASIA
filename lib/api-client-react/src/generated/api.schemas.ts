@@ -46,6 +46,18 @@ export interface DecideOrderRequest {
   decision: DecideOrderRequestDecision;
 }
 
+export type ExchangeRatePackagesItem = {
+  id: string;
+  name: string;
+  faceValue: number;
+  price: number;
+};
+
+export interface ExchangeRate {
+  rate: number;
+  packages: ExchangeRatePackagesItem[];
+}
+
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus];
 
 export const OrderStatus = {

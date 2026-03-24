@@ -12,6 +12,8 @@ tags:
     description: Health operations
   - name: orders
     description: Order operations
+  - name: settings
+    description: Settings operations
 paths:
   /healthz:
     get:
@@ -161,6 +163,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Order"
+  /settings/rate:
+    get:
+      operationId: getExchangeRate
+      tags: [settings]
+      summary: Get current exchange rate
+      responses:
+        "200":
+          description: Current rate
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExchangeRate"
   /telegram/webhook:
     post:
       operationId: telegramWebhook
@@ -253,6 +267,32 @@ components:
           enum: [approved, rejected]
       required:
         - decision
+    ExchangeRate:
+      type: object
+      properties:
+        rate:
+          type: number
+        packages:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              faceValue:
+                type: number
+              price:
+                type: number
+            required:
+              - id
+              - name
+              - faceValue
+              - price
+      required:
+        - rate
+        - packages
     Order:
       type: object
       properties:
