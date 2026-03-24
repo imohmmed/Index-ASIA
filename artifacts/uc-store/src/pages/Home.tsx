@@ -6,7 +6,6 @@ import { useCreateOrder } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { StepIndicator } from "@/components/StepIndicator";
 import { Loader2, X, ShoppingCart } from "lucide-react";
-import { AsiacellLogo } from "@/components/AsiacellLogo";
 
 export default function Home() {
   const [_, setLocation] = useLocation();
@@ -66,16 +65,16 @@ export default function Home() {
           >
             <div className="bg-gradient-to-r from-[#E30613] to-[#c40510] p-6 flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <AsiacellLogo className="w-16 h-16" />
-                <div>
-                  <h3 className="text-white font-black text-2xl">آسياسيل</h3>
-                  <p className="text-white/80 text-sm">شراء رصيد فوري</p>
+                <div dir="ltr">
+                  <span className="font-black text-3xl text-white" style={{fontFamily: "'Arial Black', Impact, sans-serif"}}>ASIA</span>
+                  <span className="font-black text-3xl text-[#D4AF37]" style={{fontFamily: "'Arial Black', Impact, sans-serif"}}>MAX</span>
                 </div>
+                <p className="text-white/80 text-sm">شراء رصيد فوري</p>
               </div>
             </div>
             <div className="p-8 text-center">
               <p className="text-white text-lg font-semibold mb-2">
-                رصيد آسياسيل بأسعار مخفضة
+                رصيد بأسعار مخفضة
               </p>
               <p className="text-muted-foreground mb-6">
                 اضغط لاختيار الفئة المناسبة
@@ -110,13 +109,13 @@ export default function Home() {
               >
                 <div className="flex items-center justify-between p-5 border-b border-white/10">
                   <div className="flex items-center gap-3">
-                    <AsiacellLogo className="w-10 h-10" />
-                    <div>
-                      <h3 className="text-white font-bold text-lg">آسياسيل</h3>
-                      <p className="text-muted-foreground text-xs">
-                        اختر الفئة المناسبة
-                      </p>
+                    <div dir="ltr">
+                      <span className="font-black text-lg text-white" style={{fontFamily: "'Arial Black', Impact, sans-serif"}}>ASIA</span>
+                      <span className="font-black text-lg text-[#D4AF37]" style={{fontFamily: "'Arial Black', Impact, sans-serif"}}>MAX</span>
                     </div>
+                    <p className="text-muted-foreground text-xs">
+                      اختر الفئة المناسبة
+                    </p>
                   </div>
                   <button
                     onClick={() => {

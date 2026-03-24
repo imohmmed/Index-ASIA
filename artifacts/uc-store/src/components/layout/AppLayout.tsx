@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { Link } from "wouter";
 import { Shield, Zap } from "lucide-react";
-import { AsiacellLogo } from "@/components/AsiacellLogo";
 
 export function AppLayout({ children }: { children: ReactNode }) {
   return (
@@ -11,14 +10,9 @@ export function AppLayout({ children }: { children: ReactNode }) {
 
       <header className="relative z-10 border-b border-white/5 bg-background/50 backdrop-blur-xl">
         <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 group">
-            <AsiacellLogo className="w-12 h-12 group-hover:scale-110 transition-transform" />
-            <div>
-              <h1 className="font-black text-2xl tracking-wider text-white group-hover:text-[#E30613] transition-colors">
-                آسياسيل
-              </h1>
-              <p className="text-xs text-muted-foreground font-medium">شراء رصيد فوري</p>
-            </div>
+          <Link href="/" className="group hover:scale-105 transition-transform" dir="ltr">
+            <span className="font-black text-3xl tracking-widest text-white" style={{fontFamily: "'Arial Black', Impact, sans-serif"}}>ASIA</span>
+            <span className="font-black text-3xl tracking-widest text-[#D4AF37]" style={{fontFamily: "'Arial Black', Impact, sans-serif"}}>MAX</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-6 text-sm font-semibold tracking-wide">
@@ -41,7 +35,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
       <footer className="relative z-10 border-t border-white/5 bg-background/80 backdrop-blur-md py-8 mt-auto">
         <div className="container mx-auto px-4 text-center">
           <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} آسياسيل ستور. جميع الحقوق محفوظة.
+            © {new Date().getFullYear()} ASIAMAX. جميع الحقوق محفوظة.
           </p>
         </div>
       </footer>
