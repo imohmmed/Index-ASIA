@@ -43,3 +43,49 @@ export async function answerCallbackQuery(callbackQueryId: string, text?: string
     logger.error({ err }, "Telegram answerCallbackQuery error");
   }
 }
+
+type UpdateHandler = (update: any) => Promise<void>;
+let pollingActive = false;
+
+export function startPolling(handler: UpdateHandler) {
+  if (!BOT_TOKEN) {
+    logger.warn("TELEGRAM_BOT_TOKEN not set, skipping polling");
+    return;
+  }
+
+  fetch(`${API_BASE}/deleteWebhook`).then(() => {
+    logger.info("Telegram webhook deleted, starting polling");
+  }).catch(() => {});
+
+  pollingActive = true;
+  let offset = 0;
+
+  async function poll() {
+    if (!pollingActive) return;
+    try {
+      const res = await fetch(`${API_BASE}/getUpdates?offset=${offset}&timeout=30`, {
+        signal: AbortSignal.timeout(35000),
+      });
+      const data = await res.json();
+      if (data.ok && data.result?.length > 0) {
+        for (const update of data.result) {
+          offset = update.update_id + 1;
+          try {
+            await handler(update);
+          } catch (err) {
+            logger.error({ err }, "Error handling telegram update");
+          }
+        }
+      }
+    } catch (err: any) {
+      if (err.name !== "TimeoutError") {
+        logger.error({ err }, "Polling error");
+        await new Promise((r) => setTimeout(r, 3000));
+      }
+    }
+    setTimeout(poll, 100);
+  }
+
+  poll();
+  logger.info("Telegram bot polling started");
+}

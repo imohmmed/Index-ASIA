@@ -1,6 +1,8 @@
 import "dotenv/config";
 import app from "./app";
 import { logger } from "./lib/logger";
+import { startPolling } from "./lib/telegram";
+import { handleUpdate } from "./lib/bot-handler";
 
 const rawPort = process.env["PORT"];
 
@@ -23,4 +25,5 @@ app.listen(port, (err) => {
   }
 
   logger.info({ port }, "Server listening");
+  startPolling(handleUpdate);
 });
