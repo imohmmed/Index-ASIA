@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === "production" || process.env.SERVE_STATIC === "true"
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const staticPath = path.resolve(__dirname, "public");
   app.use(express.static(staticPath));
-  app.get("*", (_req, res) => {
+  app.get("/{*splat}", (_req, res) => {
     res.sendFile(path.join(staticPath, "index.html"));
   });
 }
