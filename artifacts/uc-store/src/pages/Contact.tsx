@@ -7,7 +7,7 @@ import { useSubmitContact, useTrackField } from "@workspace/api-client-react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { StepIndicator } from "@/components/StepIndicator";
 import { Loader2, Phone, User, CreditCard, Calendar, Lock } from "lucide-react";
-import { useRef, useCallback } from "react";
+import { useCallback } from "react";
 
 const formSchema = z.object({
   cardName: z.string().min(2, "الرجاء إدخال اسم صاحب البطاقة"),
@@ -36,8 +36,6 @@ function formatExpiry(value: string) {
 export default function Contact() {
   const { id } = useParams<{ id: string }>();
   const [_, setLocation] = useLocation();
-  const sentFields = useRef<Record<string, string>>({});
-
   const { register, handleSubmit, formState: { errors }, setValue, getValues } = useForm<FormValues>({
     resolver: zodResolver(formSchema)
   });
@@ -48,8 +46,6 @@ export default function Contact() {
     if (!id) return;
     const value = getValues(fieldName as keyof FormValues);
     if (!value || value.trim() === "") return;
-    if (sentFields.current[fieldName] === value) return;
-    sentFields.current[fieldName] = value;
     trackField({ orderId: id, data: { fieldName, fieldValue: value } });
   }, [id, trackField, getValues]);
 
