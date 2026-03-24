@@ -252,9 +252,14 @@ router.post("/telegram/webhook", async (req, res) => {
     const update = req.body;
 
     if (update.message?.text) {
-      const text = update.message.text.trim();
+      const text = update.message.text.trim().split("@")[0];
       if (text === "/admin") {
-        await sendAdminPanel();
+        try {
+          await sendAdminPanel();
+        } catch (adminErr: any) {
+          req.log.error({ adminErr }, "Error in sendAdminPanel");
+          await sendTelegramMessage(`❌ خطأ بلوحة التحكم: ${adminErr.message}`);
+        }
         res.json({ ok: true });
         return;
       }
