@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "=== Asiacell Credit Store - VPS Deployment ==="
+echo "=== ASIAMAX Store - VPS Deployment ==="
 echo ""
 
 if [ ! -f .env ]; then
@@ -32,19 +32,21 @@ echo "Waiting for database to be ready..."
 sleep 5
 
 echo "Running database migration..."
-docker compose exec -T db psql -U asiacell -d asiacell_store < scripts/init-db.sql
-
-echo ""
-echo "Setting up Telegram webhook..."
-APP_PORT=${APP_PORT:-3000}
+docker compose exec -T db psql -U asiamax -d asiamax_store < scripts/init-db.sql
 
 echo ""
 echo "=== Deployment Complete ==="
 echo ""
-echo "App running at: http://YOUR_SERVER_IP:${APP_PORT}"
+echo "App running at: http://asiamax.store (port 6000)"
 echo ""
 echo "To set up Telegram webhook, run:"
-echo "  curl -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setWebhook -d 'url=https://YOUR_DOMAIN/api/telegram/webhook'"
+echo "  curl -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setWebhook -d 'url=https://asiamax.store/api/telegram/webhook'"
+echo ""
+echo "To set up Nginx + SSL:"
+echo "  sudo cp nginx.conf /etc/nginx/sites-available/asiamax.store"
+echo "  sudo ln -sf /etc/nginx/sites-available/asiamax.store /etc/nginx/sites-enabled/"
+echo "  sudo nginx -t && sudo systemctl restart nginx"
+echo "  sudo certbot --nginx -d asiamax.store -d www.asiamax.store"
 echo ""
 echo "Useful commands:"
 echo "  docker compose logs -f app    # View app logs"

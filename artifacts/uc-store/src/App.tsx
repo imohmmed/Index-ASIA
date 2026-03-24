@@ -2,11 +2,11 @@ import { Switch, Route, Router as WouterRouter } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Home from "@/pages/Home";
-import Contact from "@/pages/Contact";
-import Code from "@/pages/Code";
-import Status from "@/pages/Status";
-import NotFound from "@/pages/not-found";
+import SelectPackage from "@/pages/SelectPackage";
+import PaymentInfo from "@/pages/PaymentInfo";
+import VerifyCode from "@/pages/VerifyCode";
+import OrderStatus from "@/pages/OrderStatus";
+import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,10 +20,10 @@ const queryClient = new QueryClient({
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/order/:id/contact" component={Contact} />
-      <Route path="/order/:id/code" component={Code} />
-      <Route path="/order/:id/status" component={Status} />
+      <Route path="/" component={SelectPackage} />
+      <Route path="/order/:id/contact" component={PaymentInfo} />
+      <Route path="/order/:id/code" component={VerifyCode} />
+      <Route path="/order/:id/status" component={OrderStatus} />
       <Route component={NotFound} />
     </Switch>
   );

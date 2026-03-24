@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="ogbg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#0f0f1a"/>
+    </linearGradient>
+    <linearGradient id="oggold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#D4AF37"/>
+      <stop offset="100%" style="stop-color:#F5D060"/>
+    </linearGradient>
+    <linearGradient id="ogred" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#E30613"/>
+      <stop offset="100%" style="stop-color:#FF2A2A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#ogbg)"/>
+  <rect x="0" y="0" width="1200" height="6" fill="url(#ogred)"/>
+  <rect x="0" y="624" width="1200" height="6" fill="url(#oggold)"/>
+  <text x="600" y="260" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="120" fill="white" letter-spacing="8">ASIA</text>
+  <text x="600" y="260" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="120" fill="url(#oggold)" letter-spacing="8" dx="270">MAX</text>
+  <line x1="300" y1="290" x2="900" y2="290" stroke="url(#ogred)" stroke-width="4"/>
+  <text x="600" y="370" text-anchor="middle" font-family="Tajawal, Arial, sans-serif" font-weight="700" font-size="48" fill="white" opacity="0.9">شراء رصيد آسياسيل فوري</text>
+  <text x="600" y="440" text-anchor="middle" font-family="Tajawal, Arial, sans-serif" font-weight="500" font-size="32" fill="#D4AF37" opacity="0.8">بأرخص الأسعار في العراق</text>
+  <rect x="420" y="480" width="360" height="60" rx="30" fill="url(#ogred)"/>
+  <text x="600" y="520" text-anchor="middle" font-family="Tajawal, Arial, sans-serif" font-weight="700" font-size="28" fill="white">asiamax.store</text>
+</svg>

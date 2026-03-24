@@ -22,7 +22,7 @@ COPY --from=deps /app/artifacts/api-server/node_modules ./artifacts/api-server/n
 COPY --from=deps /app/artifacts/uc-store/node_modules ./artifacts/uc-store/node_modules
 COPY . .
 
-RUN PORT=5173 BASE_PATH="/" pnpm --filter @workspace/uc-store run build
+RUN PORT=6000 BASE_PATH="/" pnpm --filter @workspace/uc-store run build
 
 RUN pnpm --filter @workspace/api-server run build
 
@@ -34,8 +34,8 @@ WORKDIR /app
 COPY --from=builder /app/artifacts/api-server/dist ./dist
 
 ENV NODE_ENV=production
-ENV PORT=3000
+ENV PORT=6000
 
-EXPOSE 3000
+EXPOSE 6000
 
 CMD ["node", "--enable-source-maps", "./dist/index.mjs"]

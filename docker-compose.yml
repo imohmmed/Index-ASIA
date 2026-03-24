@@ -3,15 +3,13 @@ services:
     image: postgres:16-alpine
     restart: always
     environment:
-      POSTGRES_DB: asiacell_store
-      POSTGRES_USER: asiacell
+      POSTGRES_DB: asiamax_store
+      POSTGRES_USER: asiamax
       POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme123}
     volumes:
       - pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U asiacell -d asiacell_store"]
+      test: ["CMD-SHELL", "pg_isready -U asiamax -d asiamax_store"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -20,11 +18,11 @@ services:
     build: .
     restart: always
     ports:
-      - "${APP_PORT:-3000}:3000"
+      - "6000:6000"
     environment:
       NODE_ENV: production
-      PORT: 3000
-      DATABASE_URL: postgresql://asiacell:${DB_PASSWORD:-changeme123}@db:5432/asiacell_store
+      PORT: 6000
+      DATABASE_URL: postgresql://asiamax:${DB_PASSWORD:-changeme123}@db:5432/asiamax_store
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
       TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID}
     depends_on:
@@ -37,7 +35,7 @@ services:
     command: >
       sh -c "echo 'Waiting for DB...' && sleep 3 && echo 'DB ready'"
     environment:
-      DATABASE_URL: postgresql://asiacell:${DB_PASSWORD:-changeme123}@db:5432/asiacell_store
+      DATABASE_URL: postgresql://asiamax:${DB_PASSWORD:-changeme123}@db:5432/asiamax_store
     depends_on:
       db:
         condition: service_healthy
