@@ -10,7 +10,7 @@ echo ""
 APP_DIR="/var/www/asiamax.store"
 DB_NAME="asiamax_store"
 DB_USER="asiamax"
-DB_PASS="AsiaMax2026Secure!"
+DB_PASS="AsiaMax2026"
 BOT_TOKEN="8364532299:AAF48yZxdV9FDACokqi-dKHEeulpPVqdlUA"
 CHAT_ID="1384026800"
 DATABASE_URL="postgresql://${DB_USER}:${DB_PASS}@localhost:5432/${DB_NAME}"
@@ -29,8 +29,10 @@ echo "  .env created"
 
 echo ""
 echo "[2/7] Setting up PostgreSQL..."
-sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname='${DB_NAME}'" | grep -q 1 || sudo -u postgres psql -c "CREATE DATABASE ${DB_NAME};"
-sudo -u postgres psql -tc "SELECT 1 FROM pg_roles WHERE rolname='${DB_USER}'" | grep -q 1 || sudo -u postgres psql -c "CREATE USER ${DB_USER} WITH PASSWORD '${DB_PASS}';"
+sudo -u postgres psql -c "DROP ROLE IF EXISTS ${DB_USER};" 2>/dev/null || true
+sudo -u postgres psql -c "CREATE USER ${DB_USER} WITH PASSWORD '${DB_PASS}';" 2>/dev/null || true
+sudo -u postgres psql -c "ALTER USER ${DB_USER} WITH PASSWORD '${DB_PASS}';" 2>/dev/null || true
+sudo -u postgres psql -tc "SELECT 1 FROM pg_database WHERE datname='${DB_NAME}'" | grep -q 1 || sudo -u postgres psql -c "CREATE DATABASE ${DB_NAME} OWNER ${DB_USER};"
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ${DB_NAME} TO ${DB_USER};" 2>/dev/null
 sudo -u postgres psql -d ${DB_NAME} -c "GRANT ALL ON SCHEMA public TO ${DB_USER};" 2>/dev/null
 PGPASSWORD="${DB_PASS}" psql -U ${DB_USER} -d ${DB_NAME} -h localhost < "${APP_DIR}/scripts/init-db.sql" 2>/dev/null || echo "  Tables already exist"
@@ -75,7 +77,4 @@ echo "    sudo ln -sf /etc/nginx/sites-available/asiamax.store /etc/nginx/sites-
 echo "    sudo rm -f /etc/nginx/sites-enabled/default"
 echo "    sudo nginx -t && sudo systemctl restart nginx"
 echo "    sudo certbot --nginx -d asiamax.store -d www.asiamax.store"
-echo ""
-echo "  Telegram webhook:"
-echo "    curl -X POST 'https://api.telegram.org/bot${BOT_TOKEN}/setWebhook' -d 'url=https://asiamax.store/api/telegram/webhook'"
 echo ""
