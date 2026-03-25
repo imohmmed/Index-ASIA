@@ -1,0 +1,32 @@
+Suggested packages:
+  perl cron quota ecryptfs-utils apt-doc aptitude | synaptic | wajig dpkg-dev
+  powermgmt-base debconf-doc debconf-kde-helper debconf-utils libgtk3-perl
+  libnet-ldap-perl libterm-readline-gnu-perl whiptail | dialog dbus-user-session
+  libpam-systemd pinentry-gnome3 tor debsig-verify parcimonie xloadimage gpg-wks-server
+  scdaemon glibc-doc locales libnss-nis libnss-nisplus rng-tools gnutls-bin gpm krb5-doc
+  krb5-user libpam-doc libsasl2-modules-gssapi-mit | libsasl2-modules-gssapi-heimdal
+  libsasl2-modules-ldap libsasl2-modules-otp libsasl2-modules-sql pinentry-doc
+  readline-doc bzip2 ncompress xz-utils tar-scripts tar-doc
+E: Archives directory /var/cache/apt/archives/partial is missing. - Acquire (2: No such file or directory)
+2026-03-25 03:56:36 - Error: Failed to install packages (Exit Code: 0)
+Reading package lists... Done
+Building dependency tree... Done
+The following additional packages will be installed:
+  apt apt-utils base-passwd ca-certificates debconf debconf-i18n dpkg gcc-14-base gpgv
+  libacl1 libapt-pkg6.0t64 libassuan0 libbrotli1 libbz2-1.0 libc6 libcap2 libcares2
+  libcrypt1 libdb5.3t64 libdebconfclient0 libffi8 libgcc-s1 libgcrypt20 libgmp10
+  libgnutls30t64 libgpg-error-l10n libgpg-error0 libhogweed6t64 libicu74 libidn2-0
+  liblocale-gettext-perl liblz4-1 liblzma5 libmd0 libnettle8t64 libnghttp2-14 libnode109
+  libnpth0t64 libp11-kit0 libpcre2-8-0 libseccomp2 libselinux1 libssl3t64 libstdc++6
+  libsystemd0 libtasn1-6 libtext-charwidth-perl libtext-iconv-perl libtext-wrapi18n-perl
+  libudev1 libunistring5 libuv1t64 libxxhash0 libzstd1 node-acorn node-busboy
+  node-cjs-module-lexer node-undici node-xtend nodejs-doc openssl perl-base tar
+  ubuntu-keyring zlib1g
+Suggested packages:
+  apt-doc aptitude | synaptic | wajig dpkg-dev gnupg | gnupg2 | gnupg1 powermgmt-base
+  debconf-doc debconf-kde-helper debconf-utils libgtk3-perl libnet-ldap-perl
+  libterm-readline-gnu-perl perl whiptail | dialog debsig-verify gnupg glibc-doc locales
+  libnss-nis libnss-nisplus rng-tools gnutls-bin npm sensible-utils bzip2 ncompress
+  xz-utils tar-scripts tar-doc
+E: Archives directory /var/cache/apt/archives/partial is missing. - Acquire (2: No such file or directory)
+root@vmi3178175:~# 
