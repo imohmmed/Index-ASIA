@@ -30,3 +30,15 @@ timeoutMs = 20000
 [userenv.shared]
 TELEGRAM_BOT_TOKEN = "8364532299:AAF48yZxdV9FDACokqi-dKHEeulpPVqdlUA"
 TELEGRAM_CHAT_ID = "1384026800"
+
+[[ports]]
+localPort = 8080
+externalPort = 8080
+
+[[ports]]
+localPort = 8081
+externalPort = 8081
+
+[[ports]]
+localPort = 19639
+externalPort = 80
